@@ -36,8 +36,8 @@ connector.protocol("https")
   .host('use2-api.mapd.cloud')
   .port(443)
   .dbName('mapd')
-  .user('LD866694E4D9143A5A3F')
-  .password('jh5mnhiHEJefnzZ1t4GvSKxh28bGyCjvdaTO6JoQ') 
+  .user('T74034EBC55A24BF6A33')
+  .password('p70KZpgqaRGcwIFSHJG9dThHraux4N7gQIJQycnx') 
   .connectAsync()
   .then(session=>
     {
