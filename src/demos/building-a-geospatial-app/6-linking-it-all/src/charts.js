@@ -30,8 +30,8 @@ export default function Charts({
   });
 
   return (<div style={charts}>
-    <h2>Pickups by hour</h2>
-    <p>As percentage of all trips</p>
+    <h2> Traffic Timeline</h2>
+    <p> Percentage of Trips by Hour</p>
     <XYPlot
       margin={{left: 40, right: 25, top: 10, bottom: 25}}
       height={140}

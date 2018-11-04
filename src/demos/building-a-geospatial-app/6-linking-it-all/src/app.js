@@ -7,7 +7,6 @@ import MapDCon from '@mapd/connector/dist/browser-connector';
  const defaultQueryOptions = {};
  var deckgl;
  var currentFilter={seaLevel:0,NOR:5,commercial:"COMM-MO','COMM",government:'GOVT',duplex:'DUP',quad:'QUAD',residential:'CA - Res',condo:'CA - Condo',SFR:'SFR',GP:1,HP:0,HP_check:0,freeze:0,pointSize:5,DTM:1,DSM:1}
- var tooltip
  // var debounceZoom = debounce(function(v,boundingPoly){
  //  zoomCheck(v.zoom)
  //  executeQuery(boundingPoly);
@@ -41,7 +40,7 @@ connector.protocol("https")
   .connectAsync()
   .then(session=>
     {
-      Promise.all([session.queryAsync('SELECT * FROM uber_movement_data', defaultQueryOptions), session.queryAsync('SELECT * FROM san_francisco_data', defaultQueryOptions)])
+      Promise.all([session.queryAsync('SELECT * FROM uber_movement_data21', defaultQueryOptions), session.queryAsync('SELECT * FROM san_francisco_taz_good', defaultQueryOptions)])
       .then(values => {
               createDeckGL(values);
     })  })
