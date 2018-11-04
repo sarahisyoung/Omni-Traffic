@@ -1,5 +1,21 @@
 /* global window */
 import React, {Component} from 'react';
+
+
+
+import MapDCon from '@mapd/connector/dist/browser-connector';
+ const defaultQueryOptions = {};
+ var deckgl;
+ var currentFilter={seaLevel:0,NOR:5,commercial:"COMM-MO','COMM",government:'GOVT',duplex:'DUP',quad:'QUAD',residential:'CA - Res',condo:'CA - Condo',SFR:'SFR',GP:1,HP:0,HP_check:0,freeze:0,pointSize:5,DTM:1,DSM:1}
+ var tooltip
+ // var debounceZoom = debounce(function(v,boundingPoly){
+ //  zoomCheck(v.zoom)
+ //  executeQuery(boundingPoly);
+ // }, 500);
+
+
+
+
 import MapGL from 'react-map-gl';
 import DeckGLOverlay from './deckgl-overlay';
 import {
@@ -10,9 +26,37 @@ import Charts from './charts';
 import {tooltipStyle} from './style';
 import taxiData from '../../../data/taxi';
 
+
+
+
+
+
+const connector = new MapdCon();
+connector.protocol("https")
+  .host('use2-api.mapd.cloud')
+  .port(443)
+  .dbName('mapd')
+  .user('LD866694E4D9143A5A3F')
+  .password('jh5mnhiHEJefnzZ1t4GvSKxh28bGyCjvdaTO6JoQ') 
+  .connectAsync()
+  .then(session=>
+    {
+      Promise.all([session.queryAsync('SELECT * FROM uber_movement_data', defaultQueryOptions), session.queryAsync('SELECT * FROM san_francisco_data', defaultQueryOptions)])
+      .then(values => {
+              createDeckGL(values);
+    })  })
+.catch(error => {
+    console.error("Something bad happened: ", error)
+  })
+
+
+
+
+
 const MAPBOX_STYLE = 'mapbox://styles/mapbox/dark-v9';
 // Set your mapbox token here
-const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+// const MAPBOX_TOKEN = process.env.MapboxAccessToken; // eslint-disable-line
+const MAPBOX_TOKEN = "pk.eyJ1IjoidWJlcmRhdGEiLCJhIjoiY2o4OW90ZjNuMDV6eTMybzFzbmc3bWpvciJ9.zfRO_nfL1O3d2EuoNtE_NQ"
 
 export default class App extends Component {
 
@@ -21,11 +65,11 @@ export default class App extends Component {
     this.state = {
       ...props,
       viewport: {
-        width: window.innerWidth,
+        width: window.innerWidth-10,
         height: window.innerHeight,
         longitude: -74,
         latitude: 40.7,
-        zoom: 11,
+        zoom: 10,
         maxZoom: 16,
         ...props.viewport
       },
